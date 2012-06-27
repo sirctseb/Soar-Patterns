@@ -43,7 +43,8 @@ sp {propose*end-init
 # apply end-init operator
 sp {apply*end-init
 	(state <s> ^name init ^operator <o> ^top-state <ts>)
-	(<o> ^state-name <state-name>)
+	(<o> ^state-name <state-name>
+		 ^name end-init)
 -->
 	(<ts> ^name <state-name>)
 }
