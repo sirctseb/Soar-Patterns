@@ -1,0 +1,115 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Soar-patterns</title>
+  <meta name="description" content="A collection of useful patterns in Soar">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Soar-patterns</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">A collection of useful patterns in Soar</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/sirctseb/Soar-Patterns/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/sirctseb/Soar-Patterns/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/sirctseb/Soar-Patterns" class="code">View Soar-patterns on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h2>Soar-patterns: Patterns for Soar</h2>
+
+<p>Soar-patterns aim to solve common problems in developing Soar agents in a simple and reusable way.</p>
+
+<h2>How to use these patterns</h2>
+
+<p>Each pattern comes as a full Visual Soar project so it can be easily viewed or modified. Productions can be sourced with <code>source pattern/pattern.soar</code></p>
+
+<p>Some patterns depend on others. The dependencies are described below</p>
+
+<h3>Ancestry</h3>
+
+<p>This project elaborates each state with its ancestors. So if state <code>S3</code> has <code>(S3 ^superstate S2)</code> and <code>S2</code> has <code>(S2 ^superstate S1)</code>, then <code>S3</code> will be elaborated to have <code>(S3 ^ancestor S2 ^ancestor S1)</code>, and <code>S2</code> will have <code>(S2 ^ancestor S1)</code>. This allows productions to easily test any state in the superstate chain.</p>
+
+<h5>To use:</h5>
+
+<p>Simply test <code>(&lt;s&gt; ^ancestor &lt;ancestor&gt;)</code> to match any ancestor of a state</p>
+
+<h3>Init</h3>
+
+<p><em>Requires Ancestry</em></p>
+
+<p>Init.soar is a pattern to easily implement simple or complex initialization procedures.<br>
+A required <code>init</code> subgoal is proposed when the top state has no name. Arbitrary initialization rules and operators can be defined within the <code>init</code> subgoal. An ending operator is proposed in a state no-change substate of init, so that it only fires after there are no more initialization operators. The ending operator application adds a name to the top-state, which will retract the <code>init</code> subgoal.</p>
+
+<h5>To use:</h5>
+
+<ol>
+<li>Implement initialization operators which test <code>(state &lt;s&gt; ^name init)</code>
+</li>
+<li>Elaborate the proposed <code>end-init</code> operator with the name you want the top-state to have after initialization is complete. e.g.:</li>
+</ol><pre><code># declare state name
+sp declare*state*name {
+   (state &lt;s&gt; ^operator &lt;o&gt; +)
+   (&lt;o&gt; ^name end-init)
+--&gt;
+   (&lt;o&gt; ^state-name my-state-name)
+}
+</code></pre>
+
+<h3>Procedural</h3>
+
+<p>Procedural.soar is a patter to easily define operators that are selected and applied in sequence</p>
+
+<h5>To use:</h5>
+
+<ol>
+<li>Propose an operator with the attribute <code>(&lt;o&gt; ^procedure procedure-name)</code>
+</li>
+<li>Do not define application rules for the operator.</li>
+<li>Define operators which should fire in sequence within the resulting subgoal. Each operator should have <code>(&lt;o&gt; ^sequence int)</code>
+</li>
+<li>When the original procedure operator is selected, a subgoal is created, and the operators will be selected and applied in increasing order of sequence numbers.</li>
+</ol>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/sirctseb" class="avatar"><img src="https://secure.gravatar.com/avatar/6085556ab29ce4f325fe5eaada394886?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" width="48" height="48"/></a> <a href="https://github.com/sirctseb">sirctseb</a> maintains <a href="https://github.com/sirctseb/Soar-Patterns">Soar-patterns</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/sirctseb/Soar-Patterns/tarball/master" class="tar">tar</a><a href="https://github.com/sirctseb/Soar-Patterns/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
